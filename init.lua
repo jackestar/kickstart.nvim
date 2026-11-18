@@ -129,7 +129,22 @@ do
   --  Schedule the setting after `UiEnter` because it can increase startup-time.
   --  Remove this option if you want your OS clipboard to remain independent.
   --  See `:help 'clipboard'`
-  vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
+  -- vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
+vim.schedule(function()
+  if vim.env.SSH_TTY then
+    local osc52 = require('vim.ui.clipboard.osc52')
+    -- Pasting via OSC 52 is rarely supported, so paste from Neovim's own register
+    local function paste()
+      return { vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('') }
+    end
+    vim.g.clipboard = {
+      name = 'OSC 52',
+      copy = { ['+'] = osc52.copy('+'), ['*'] = osc52.copy('*') },
+      paste = { ['+'] = paste, ['*'] = paste },
+    }
+  end
+  vim.o.clipboard = 'unnamedplus'
+end)
 
   -- Enable break indent
   vim.o.breakindent = true
