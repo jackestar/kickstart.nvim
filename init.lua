@@ -83,6 +83,13 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
+--
+
+
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+vim.opt.expandtab = true
 
 -- ============================================================
 -- SECTION 1: OPTIONS
@@ -736,7 +743,16 @@ do
     -- clangd = {},
     -- gopls = {},
     -- pyright = {},
-    -- tsc = {},
+    tsc = {},
+    astro = {},
+    html = {},
+    cssls = {},
+    emmet_language_server = {
+    filetypes = {
+      'html', 'css', 'scss', 'astro',
+      'javascriptreact', 'typescriptreact', -- JSX/TSX (Preact)
+      },
+    },
     --
     -- Some languages (like rust) have entire language plugins that can be useful:
     --    https://github.com/mrcjkb/rustaceanvim
@@ -1018,13 +1034,13 @@ do
   -- require 'kickstart.plugins.indent_line'
   -- require 'kickstart.plugins.lint'
   -- require 'kickstart.plugins.autopairs'
-  -- require 'kickstart.plugins.neo-tree'
+  require 'kickstart.plugins.neo-tree'
 
-  -- NOTE: You can add your own plugins, configuration, etc. in `lua/custom/plugins/*.lua`.
+  -- NOTE: You can add yourdiffview.nvim own plugins, configuration, etc. in `lua/custom/plugins/*.lua`.
   --
   -- For independent modules, uncomment the convenience loader:
-  -- require 'custom.plugins'
-  --
+  require 'custom.plugins'
+
   -- `custom.plugins` automatically loads files from that directory, but their
   -- order is unspecified. If plugins depend on each other, keep them in the same
   -- file and put their `vim.pack.add()` and `setup()` calls in the required order.
